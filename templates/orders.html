@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}My orders · ShopLite{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+  <div>
+    <h1 class="h3 mb-1">My orders</h1>
+    <p class="text-muted mb-0">{{ orders|length }} order{{ '' if orders|length == 1 else 's' }}</p>
+  </div>
+  <a class="btn btn-outline-secondary" href="{{ url_for('index') }}">Continue shopping</a>
+</div>
+
+{% if orders %}
+  <div class="card shadow-sm">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Order</th>
+            <th scope="col">Date</th>
+            <th scope="col" class="text-center">Units</th>
+            <th scope="col" class="text-end">Total</th>
+            <th scope="col">Status</th>
+            <th scope="col" class="text-end"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+            <tr>
+              <td class="fw-semibold">#{{ order.id }}</td>
+              <td class="text-muted">{{ order.created_at }}</td>
+              <td class="text-center">{{ order.units }}</td>
+              <td class="text-end">{{ order.total|money }}</td>
+              <td><span class="badge {{ STATUS_CLASSES[order.status] }}">{{ order.status }}</span></td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('order_detail', order_id=order.id) }}">
+                  View
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% else %}
+  <div class="text-center bg-white rounded shadow-sm py-5">
+    <div class="display-5 mb-2" aria-hidden="true">📦</div>
+    <h2 class="h5">No orders yet</h2>
+    <p class="text-muted mb-4">When you place an order it will appear here.</p>
+    <a class="btn btn-primary" href="{{ url_for('index') }}">Start shopping</a>
+  </div>
+{% endif %}
+{% endblock %}

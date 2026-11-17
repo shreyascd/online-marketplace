@@ -1,0 +1,55 @@
+/* ShopLite - small tweaks on top of Bootstrap 5 */
+
+body {
+  background-color: #f6f7f9;
+}
+
+/* Emoji stand-in for product photography */
+.product-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  font-size: 3.5rem;
+  line-height: 1;
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.product-emoji-lg {
+  min-height: 320px;
+  font-size: 7rem;
+  border-radius: 0.5rem;
+}
+
+.product-card {
+  border: 0;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1.5rem rgba(15, 23, 42, 0.12) !important;
+}
+
+/* Keep table cells readable next to badges and inline forms */
+.table > :not(caption) > * > * {
+  vertical-align: middle;
+}
+
+.cart-qty {
+  width: 90px;
+}
+
+.status-select {
+  width: 135px;
+}
+
+/* Softer default card borders than Bootstrap's */
+.card {
+  border: 0;
+}
+
+footer {
+  margin-top: auto;
+}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Checkout · ShopLite{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-3">Checkout</h1>
+
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="card shadow-sm">
+      <div class="card-header bg-white fw-semibold">Order summary</div>
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col" class="text-center">Qty</th>
+              <th scope="col" class="text-end">Unit price</th>
+              <th scope="col" class="text-end">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center gap-2">
+                    <span aria-hidden="true">{{ item.product.category|emoji }}</span>
+                    <span>{{ item.product.name }}</span>
+                  </div>
+                </td>
+                <td class="text-center">{{ item.quantity }}</td>
+                <td class="text-end">{{ item.product.price|money }}</td>
+                <td class="text-end">{{ item.subtotal|money }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <tr class="table-light">
+              <th colspan="3" class="text-end">Total</th>
+              <th class="text-end fs-5">{{ total|money }}</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5 mb-3">Shipping address</h2>
+        <form method="post" action="{{ url_for('checkout') }}" novalidate>
+          <div class="mb-3">
+            <label class="form-label" for="shipping_address">Full delivery address</label>
+            <textarea class="form-control" id="shipping_address" name="shipping_address" rows="5"
+                      minlength="10" required
+                      placeholder="House / street, city, state, PIN code">{{ address }}</textarea>
+            <div class="form-text">At least 10 characters.</div>
+          </div>
+          <button class="btn btn-primary w-100" type="submit">Place order</button>
+        </form>
+        <a class="btn btn-link w-100 mt-2" href="{{ url_for('cart') }}">← Back to cart</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

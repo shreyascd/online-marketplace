@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}Seller dashboard · ShopLite{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+  <div>
+    <h1 class="h3 mb-1">Seller dashboard</h1>
+    <p class="text-muted mb-0">Manage your listings and watch the marketplace.</p>
+  </div>
+  <a class="btn btn-primary" href="{{ url_for('product_new') }}">+ Add product</a>
+</div>
+
+<div class="row row-cols-2 row-cols-lg-4 g-3 mb-4">
+  <div class="col">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <div class="text-uppercase text-muted small">Active listings</div>
+        <div class="fs-3 fw-bold">{{ stats.active_listings }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <div class="text-uppercase text-muted small">Units in stock</div>
+        <div class="fs-3 fw-bold">{{ stats.units_in_stock }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <div class="text-uppercase text-muted small">Total orders</div>
+        <div class="fs-3 fw-bold">
+          {{ stats.total_orders }}
+          <span class="fs-6 fw-normal text-muted">({{ stats.pending_orders }} pending)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <div class="text-uppercase text-muted small">Total revenue</div>
+        <div class="fs-3 fw-bold">{{ stats.total_revenue|money }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2 class="h5 mb-3">Your products</h2>
+
+{% if products %}
+  <div class="card shadow-sm">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col" class="text-end">Price</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Status</th>
+            <th scope="col" class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+            <tr class="{{ 'table-light text-muted' if not product.is_active }}">
+              <td>{{ product.id }}</td>
+              <td class="fw-semibold">{{ product.name }}</td>
+              <td>{{ product.category }}</td>
+              <td class="text-end">{{ product.price|money }}</td>
+              <td>
+                {% if product.stock == 0 %}
+                  <span class="badge text-bg-danger">Out</span>
+                {% elif product.stock <= 5 %}
+                  <span class="badge text-bg-warning">{{ product.stock }} · Low</span>
+                {% else %}
+                  {{ product.stock }}
+                {% endif %}
+              </td>
+              <td>
+                {% if product.is_active %}
+                  <span class="badge text-bg-success">Live</span>
+                {% else %}
+                  <span class="badge text-bg-secondary">Archived</span>
+                {% endif %}
+              </td>
+              <td class="text-end">
+                <div class="d-inline-flex gap-1">
+                  <a class="btn btn-sm btn-outline-secondary"
+                     href="{{ url_for('product_edit', product_id=product.id) }}">Edit</a>
+                  {% if product.is_active %}
+                    <form method="post" action="{{ url_for('product_delete', product_id=product.id) }}"
+                          onsubmit="return confirm('Archive this product? It will be hidden from shoppers.');">
+                      <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                    </form>
+                  {% else %}
+                    <form method="post" action="{{ url_for('product_restore', product_id=product.id) }}">
+                      <button class="btn btn-sm btn-outline-success" type="submit">Restore</button>
+                    </form>
+                  {% endif %}
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% else %}
+  <div class="text-center bg-white rounded shadow-sm py-5">
+    <div class="display-5 mb-2" aria-hidden="true">🏷️</div>
+    <h2 class="h5">No products yet</h2>
+    <p class="text-muted mb-4">Add your first listing to start selling.</p>
+    <a class="btn btn-primary" href="{{ url_for('product_new') }}">Add product</a>
+  </div>
+{% endif %}
+{% endblock %}

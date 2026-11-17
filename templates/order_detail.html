@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Order #{{ order.id }} · ShopLite{% endblock %}
+
+{% block content %}
+{% if placed %}
+  <div class="alert alert-success">
+    <strong>Thank you!</strong> Your order has been placed and is now {{ order.status|lower }}.
+  </div>
+{% endif %}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <div>
+    <h1 class="h3 mb-1">Order #{{ order.id }}</h1>
+    <p class="text-muted mb-0">Placed on {{ order.created_at }}</p>
+  </div>
+  <span class="badge fs-6 {{ STATUS_CLASSES[order.status] }}">{{ order.status }}</span>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-header bg-white fw-semibold">Items</div>
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col" class="text-center">Qty</th>
+              <th scope="col" class="text-end">Unit price</th>
+              <th scope="col" class="text-end">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center gap-2">
+                    <span aria-hidden="true">{{ item.category|emoji }}</span>
+                    <span>{{ item.product_name }}</span>
+                  </div>
+                </td>
+                <td class="text-center">{{ item.quantity }}</td>
+                <td class="text-end">{{ item.price_at_purchase|money }}</td>
+                <td class="text-end">{{ (item.price_at_purchase * item.quantity)|money }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <tr class="table-light">
+              <th colspan="3" class="text-end">Order total</th>
+              <th class="text-end fs-5">{{ order.total|money }}</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card shadow-sm mb-3">
+      <div class="card-body">
+        <h2 class="h6 text-uppercase text-muted">Shipping address</h2>
+        <p class="mb-3" style="white-space: pre-line;">{{ order.shipping_address }}</p>
+        <h2 class="h6 text-uppercase text-muted">Customer</h2>
+        <p class="mb-0">{{ order.customer_name }}</p>
+      </div>
+    </div>
+    {% if user and user.role == 'seller' %}
+      <a class="btn btn-outline-secondary w-100" href="{{ url_for('seller_orders') }}">← All orders</a>
+    {% else %}
+      <a class="btn btn-outline-secondary w-100" href="{{ url_for('orders') }}">← My orders</a>
+    {% endif %}
+    <a class="btn btn-link w-100 mt-2" href="{{ url_for('index') }}">Continue shopping</a>
+  </div>
+</div>
+{% endblock %}

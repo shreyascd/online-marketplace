@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Login · ShopLite{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-3">Log in</h1>
+        <form method="post" action="{{ url_for('login') }}">
+          <input type="hidden" name="next" value="{{ next }}">
+          <div class="mb-3">
+            <label class="form-label" for="username">Username</label>
+            <input class="form-control" id="username" name="username" value="{{ username }}"
+                   required autofocus>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input class="form-control" id="password" name="password" type="password" required>
+          </div>
+          <button class="btn btn-primary w-100" type="submit">Log in</button>
+        </form>
+        <p class="text-center mt-3 mb-0 small">
+          New here? <a href="{{ url_for('register') }}">Create an account</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="card shadow-sm mt-3">
+      <div class="card-body">
+        <h2 class="h6 text-uppercase text-muted">Demo accounts</h2>
+        <ul class="mb-0 small">
+          <li><code>seller1</code> / <code>seller123</code> — seller</li>
+          <li><code>seller2</code> / <code>seller123</code> — seller</li>
+          <li><code>customer1</code> / <code>cust123</code> — customer</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

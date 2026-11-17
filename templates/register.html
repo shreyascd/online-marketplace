@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Register · ShopLite{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7 col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-3">Create an account</h1>
+        <form method="post" action="{{ url_for('register') }}">
+          <div class="mb-3">
+            <label class="form-label" for="username">Username</label>
+            <input class="form-control" id="username" name="username" value="{{ form.username }}"
+                   minlength="3" required autofocus>
+            <div class="form-text">At least 3 characters, must be unique.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input class="form-control" id="password" name="password" type="password"
+                   minlength="6" required>
+            <div class="form-text">At least 6 characters.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="confirm_password">Confirm password</label>
+            <input class="form-control" id="confirm_password" name="confirm_password"
+                   type="password" minlength="6" required>
+          </div>
+          <div class="mb-4">
+            <label class="form-label" for="role">Account type</label>
+            <select class="form-select" id="role" name="role">
+              <option value="customer" {{ 'selected' if form.role == 'customer' }}>Customer — buy products</option>
+              <option value="seller" {{ 'selected' if form.role == 'seller' }}>Seller — list products</option>
+            </select>
+          </div>
+          <button class="btn btn-primary w-100" type="submit">Create account</button>
+        </form>
+        <p class="text-center mt-3 mb-0 small">
+          Already registered? <a href="{{ url_for('login') }}">Log in</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

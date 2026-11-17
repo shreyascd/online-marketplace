@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Your cart · ShopLite{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-3">Your cart</h1>
+
+{% if items %}
+  <div class="card shadow-sm">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Product</th>
+            <th scope="col" class="text-end">Price</th>
+            <th scope="col" class="text-center">Quantity</th>
+            <th scope="col" class="text-end">Subtotal</th>
+            <th scope="col" class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+            <tr>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <span class="fs-4" aria-hidden="true">{{ item.product.category|emoji }}</span>
+                  <div>
+                    <a class="fw-semibold text-decoration-none"
+                       href="{{ url_for('product_detail', product_id=item.product.id) }}">{{ item.product.name }}</a>
+                    <div class="small text-muted">{{ item.product.category }}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="text-end">{{ item.product.price|money }}</td>
+              <td class="text-center">
+                <form class="d-inline-flex gap-1 justify-content-center"
+                      method="post" action="{{ url_for('cart_update', product_id=item.product.id) }}">
+                  <input class="form-control form-control-sm cart-qty" type="number" name="quantity"
+                         value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}"
+                         aria-label="Quantity for {{ item.product.name }}">
+                  <button class="btn btn-sm btn-outline-secondary" type="submit">Update</button>
+                </form>
+                <div class="small text-muted mt-1">{{ item.product.stock }} available</div>
+              </td>
+              <td class="text-end fw-semibold">{{ item.subtotal|money }}</td>
+              <td class="text-end">
+                <form method="post" action="{{ url_for('cart_remove', product_id=item.product.id) }}">
+                  <button class="btn btn-sm btn-outline-danger" type="submit">Remove</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr class="table-light">
+            <th colspan="3" class="text-end">Grand total</th>
+            <th class="text-end fs-5">{{ total|money }}</th>
+            <th></th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="d-flex flex-wrap justify-content-between gap-2 mt-3">
+    <a class="btn btn-outline-secondary" href="{{ url_for('index') }}">← Continue shopping</a>
+    <a class="btn btn-primary btn-lg" href="{{ url_for('checkout') }}">Proceed to checkout</a>
+  </div>
+{% else %}
+  <div class="text-center bg-white rounded shadow-sm py-5">
+    <div class="display-5 mb-2" aria-hidden="true">🛒</div>
+    <h2 class="h5">Your cart is empty</h2>
+    <p class="text-muted mb-4">Browse the store and add something you like.</p>
+    <a class="btn btn-primary" href="{{ url_for('index') }}">Start shopping</a>
+  </div>
+{% endif %}
+{% endblock %}

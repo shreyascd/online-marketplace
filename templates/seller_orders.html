@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}All orders · ShopLite{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+  <div>
+    <h1 class="h3 mb-1">Orders</h1>
+    <p class="text-muted mb-0">Every order placed in the marketplace.</p>
+  </div>
+  <a class="btn btn-outline-secondary" href="{{ url_for('seller_dashboard') }}">← Dashboard</a>
+</div>
+
+{% if orders %}
+  <div class="card shadow-sm">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Order</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Date</th>
+            <th scope="col" class="text-center">Units</th>
+            <th scope="col" class="text-end">Total</th>
+            <th scope="col">Status</th>
+            <th scope="col" class="text-end">Update</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+            <tr>
+              <td class="fw-semibold">
+                <a class="text-decoration-none" href="{{ url_for('order_detail', order_id=order.id) }}">
+                  #{{ order.id }}
+                </a>
+              </td>
+              <td>{{ order.customer_name }}</td>
+              <td class="text-muted">{{ order.created_at }}</td>
+              <td class="text-center">{{ order.units }}</td>
+              <td class="text-end">{{ order.total|money }}</td>
+              <td><span class="badge {{ STATUS_CLASSES[order.status] }}">{{ order.status }}</span></td>
+              <td class="text-end">
+                <form class="d-inline-flex gap-1" method="post"
+                      action="{{ url_for('seller_order_status', order_id=order.id) }}">
+                  <select class="form-select form-select-sm status-select" name="status"
+                          aria-label="Status for order {{ order.id }}">
+                    {% for status in statuses %}
+                      <option value="{{ status }}" {{ 'selected' if status == order.status }}>{{ status }}</option>
+                    {% endfor %}
+                  </select>
+                  <button class="btn btn-sm btn-outline-primary" type="submit">Set</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% else %}
+  <div class="text-center bg-white rounded shadow-sm py-5">
+    <div class="display-5 mb-2" aria-hidden="true">🧾</div>
+    <h2 class="h5">No orders yet</h2>
+    <p class="text-muted mb-0">Orders placed by customers will show up here.</p>
+  </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Add product' if mode == 'new' else 'Edit product' }} · ShopLite{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="h3 mb-0">{{ 'Add a product' if mode == 'new' else 'Edit product' }}</h1>
+      <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('seller_dashboard') }}">← Dashboard</a>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <form method="post" action="{{ url_for('product_new') if mode == 'new' else url_for('product_edit', product_id=product.id) }}">
+          <div class="mb-3">
+            <label class="form-label" for="name">Product name</label>
+            <input class="form-control" id="name" name="name" value="{{ form.name }}"
+                   maxlength="100" required>
+            <div class="form-text">Required, up to 100 characters.</div>
+          </div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <label class="form-label" for="category">Category</label>
+              <input class="form-control" id="category" name="category" list="category-options"
+                     value="{{ form.category }}" placeholder="Choose or type" required>
+              <datalist id="category-options">
+                {% for name in CATEGORIES %}<option value="{{ name }}"></option>{% endfor %}
+              </datalist>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="price">Price (₹)</label>
+              <input class="form-control" id="price" name="price" type="number" step="0.01"
+                     min="0.01" value="{{ form.price }}" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="stock">Stock</label>
+              <input class="form-control" id="stock" name="stock" type="number" step="1"
+                     min="0" value="{{ form.stock }}" required>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label" for="description">Description <span class="text-muted">(optional)</span></label>
+            <textarea class="form-control" id="description" name="description" rows="4"
+                      placeholder="What makes this product worth buying?">{{ form.description }}</textarea>
+          </div>
+
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary" type="submit">
+              {{ 'Add product' if mode == 'new' else 'Save changes' }}
+            </button>
+            <a class="btn btn-outline-secondary" href="{{ url_for('seller_dashboard') }}">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
