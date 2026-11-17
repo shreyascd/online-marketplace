@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ShopLite - Full Project Documentation</title>
+<style>
+  @page {
+    size: A4;
+    margin: 20mm 15mm 20mm 15mm;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1f2937;
+    background-color: #ffffff;
+    line-height: 1.55;
+    font-size: 10.5pt;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Cover Page */
+  .cover-page {
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 245mm;
+    padding: 30px 20px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  }
+
+  .cover-header {
+    border-bottom: 3px solid #2563eb;
+    padding-bottom: 25px;
+  }
+
+  .badge-category {
+    display: inline-block;
+    background-color: #2563eb;
+    color: #ffffff;
+    font-size: 9pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+  }
+
+  .cover-title {
+    font-size: 32pt;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.15;
+    margin: 0 0 10px 0;
+  }
+
+  .cover-subtitle {
+    font-size: 14pt;
+    color: #4b5563;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .cover-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin: 35px 0;
+  }
+
+  .author-card {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-left: 6px solid #2563eb;
+    border-radius: 6px;
+    padding: 22px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  }
+
+  .author-card h3 {
+    margin: 0 0 14px 0;
+    font-size: 13pt;
+    color: #1e293b;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 8px;
+  }
+
+  .author-details-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .author-details-table td {
+    padding: 6px 0;
+    font-size: 10.5pt;
+  }
+
+  .author-details-table td.label {
+    width: 150px;
+    font-weight: 600;
+    color: #475569;
+  }
+
+  .author-details-table td.val {
+    color: #0f172a;
+    font-weight: 500;
+  }
+
+  .author-details-table a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .cover-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #cbd5e1;
+    padding-top: 15px;
+    font-size: 9.5pt;
+    color: #64748b;
+  }
+
+  /* Headings & Content */
+  h1 {
+    font-size: 18pt;
+    color: #0f172a;
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 6px;
+    margin-top: 30px;
+    margin-bottom: 14px;
+    page-break-after: avoid;
+  }
+
+  h2 {
+    font-size: 13pt;
+    color: #1e3a8a;
+    margin-top: 22px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-size: 11pt;
+    color: #334155;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    page-break-after: avoid;
+  }
+
+  p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: justify;
+  }
+
+  ul, ol {
+    margin-top: 0;
+    margin-bottom: 12px;
+    padding-left: 22px;
+  }
+
+  li {
+    margin-bottom: 4px;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 18px 0;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+  }
+
+  th, td {
+    border: 1px solid #d1d5db;
+    padding: 7px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background-color: #f1f5f9;
+    color: #1e293b;
+    font-weight: 700;
+  }
+
+  tr:nth-child(even) td {
+    background-color: #f8fafc;
+  }
+
+  /* Code & Pre */
+  code {
+    font-family: "Consolas", "Courier New", monospace;
+    background-color: #f1f5f9;
+    color: #0f172a;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-size: 9pt;
+  }
+
+  pre {
+    background-color: #0f172a;
+    color: #f8fafc;
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8.5pt;
+    line-height: 1.45;
+    overflow-x: auto;
+    margin: 12px 0 16px 0;
+    page-break-inside: avoid;
+  }
+
+  pre code {
+    background-color: transparent;
+    color: #f8fafc;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  /* Callouts & Alert Boxes */
+  .callout {
+    padding: 12px 16px;
+    margin: 14px 0;
+    border-radius: 6px;
+    page-break-inside: avoid;
+    font-size: 9.5pt;
+  }
+
+  .callout-info {
+    background-color: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    color: #1e40af;
+  }
+
+  .callout-success {
+    background-color: #f0fdf4;
+    border-left: 4px solid #22c55e;
+    color: #166534;
+  }
+
+  .callout-warning {
+    background-color: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    color: #92400e;
+  }
+
+  /* Diagrams & Flow Box */
+  .diagram-box {
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 14px;
+    margin: 14px 0;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 8pt;
+    font-weight: 600;
+  }
+  .pill-pending { background-color: #fef3c7; color: #92400e; }
+  .pill-processing { background-color: #e0f2fe; color: #075985; }
+  .pill-shipped { background-color: #dbeafe; color: #1e40af; }
+  .pill-delivered { background-color: #dcfce7; color: #166534; }
+  .pill-cancelled { background-color: #f1f5f9; color: #475569; }
+
+  .page-break {
+    page-break-after: always;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover-page">
+  <div class="cover-header">
+    <div class="badge-category">Technical Specification & Architecture Dossier</div>
+    <div class="cover-title">ShopLite — Online Marketplace System</div>
+    <div class="cover-subtitle">Complete Architecture, Database Specification, API Catalog, and Engineering Documentation</div>
+  </div>
+
+  <div class="cover-meta-grid">
+    <div class="author-card">
+      <h3>Project & Author Credentials</h3>
+      <table class="author-details-table">
+        <tr>
+          <td class="label">Developer / Author:</td>
+          <td class="val"><strong>Shreyas Channabasappa Doddappagol</strong></td>
+        </tr>
+        <tr>
+          <td class="label">Email Address:</td>
+          <td class="val"><a href="mailto:shreyas.profession@gmail.com">shreyas.profession@gmail.com</a></td>
+        </tr>
+        <tr>
+          <td class="label">Contact Number:</td>
+          <td class="val">+91 8867558967</td>
+        </tr>
+        <tr>
+          <td class="label">GitHub Profile:</td>
+          <td class="val"><a href="https://github.com/shreyascd">https://github.com/shreyascd</a></td>
+        </tr>
+        <tr>
+          <td class="label">GitHub Repository:</td>
+          <td class="val"><a href="https://github.com/shreyascd/online-marketplace">https://github.com/shreyascd/online-marketplace</a></td>
+        </tr>
+        <tr>
+          <td class="label">System Version:</td>
+          <td class="val">1.0.0 (Production-Ready Release)</td>
+        </tr>
+        <tr>
+          <td class="label">Core Architecture:</td>
+          <td class="val">Flask (Python 3.12) + SQLite3 (ACID) + Jinja2 + Bootstrap 5</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <div><strong>Confidential & Technical Documentation</strong></div>
+    <div>November 2026 | Document ID: SL-SPEC-2026-V1</div>
+  </div>
+</div>
+
+<!-- SECTION 1: EXECUTIVE SUMMARY -->
+<h1>1. Executive Summary</h1>
+<p>
+  <strong>ShopLite</strong> is a robust, lightweight, and modular e-commerce marketplace platform engineered to bridge buyers and independent sellers seamlessly. Built using modern software design principles, the application demonstrates end-to-end full-stack capabilities, incorporating role-based access control (RBAC), multi-criteria catalog search and filtering, real-time inventory tracking with defensive concurrency safeguards, and an ACID-compliant transactional checkout mechanism.
+</p>
+<p>
+  Unlike overly complex monolithic or microservice frameworks that introduce significant operational overhead, ShopLite leverages standard Python libraries combined with Flask and SQLite. It avoids heavy Object-Relational Mappings (ORMs) in favor of high-performance, strictly parameterized SQL queries. This guarantees total transparency, zero SQL-injection vulnerabilities, fast page loads, and simplified local or containerized deployments.
+</p>
+
+<div class="callout callout-info">
+  <strong>Key Architectural Value Proposition:</strong> Complete separation of concerns between presentation, business rules, and persistent storage, coupled with hardened session validation and database-level transactional locks during inventory deduction.
+</div>
+
+<!-- SECTION 2: SYSTEM ARCHITECTURE -->
+<h1>2. System Architecture & High-Level Design</h1>
+<p>
+  The system follows an adapted <strong>Model-View-Template (MVT) / Model-View-Controller (MVC)</strong> architectural pattern:
+</p>
+<ul>
+  <li><strong>Presentation Layer (View/Template):</strong> Powered by <em>Jinja2</em> and <em>Bootstrap 5.3</em>, providing a modern, mobile-responsive user interface with client-side interactivity, dynamic status badges, flash notifications, and contextual navigation bars.</li>
+  <li><strong>Application Controller Layer (Controller):</strong> Implemented in <code>app.py</code> with Flask route decorators, HTTP request parsing, input sanitization, custom authentication wrappers, and response orchestration.</li>
+  <li><strong>Data Layer (Model):</strong> Managed through <code>database.py</code> using SQLite3 with explicit connection lifecycle handlers (via Flask's <code>g</code> context), custom row factories for column-name access, foreign key enforcement, and explicit transaction isolation.</li>
+</ul>
+
+<h2>2.1 High-Level Architecture Flowchart</h2>
+<pre>
+  +-----------------------------------------------------------------------------------+
+  |                                CLIENT (Web Browser)                               |
+  +-----------------------------------------------------------------------------------+
+                                   |                 ^
+                     HTTP Requests |                 | HTML / JSON / Cookies
+                                   v                 |
+  +-----------------------------------------------------------------------------------+
+  |                          FLASK APPLICATION (app.py)                               |
+  |  +-----------------------------------------------------------------------------+  |
+  |  | Routing Engine & Request Dispatcher                                         |  |
+  |  | Authentication & Role Guards (@login_required, @seller_required)            |  |
+  |  | Session Cart Manager (read_cart, write_cart, cart_items)                    |  |
+  |  | Transactional Checkout Processor (BEGIN / COMMIT / ROLLBACK)                |  |
+  |  +-----------------------------------------------------------------------------+  |
+  +-----------------------------------------------------------------------------------+
+            |                                                      |
+            | Jinja2 Templates                                     | Parameterized SQL
+            v                                                      v
+  +--------------------+                                 +----------------------------+
+  |   PRESENTATION     |                                 |       SQLITE DATABASE      |
+  |  Bootstrap 5.3 UI  |                                 |      (marketplace.db)      |
+  |  CSS Custom Styles |                                 |  - users                   |
+  |  Dynamic Emojis    |                                 |  - products                |
+  |  Flash Alerts      |                                 |  - orders                  |
+  +--------------------+                                 |  - order_items             |
+                                                         +----------------------------+
+</pre>
+
+<div class="page-break"></div>
+
+<!-- SECTION 3: TECHNOLOGY STACK -->
+<h1>3. Technology Stack & Environment Specifications</h1>
+<p>The platform is developed and verified against the following stack components:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Layer / Component</th>
+      <th>Technology Selected</th>
+      <th>Role & Architectural Rationale</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Programming Language</strong></td>
+      <td>Python 3.12 (CPython)</td>
+      <td>High developer ergonomics, robust standard library, security features, and cross-platform compatibility.</td>
+    </tr>
+    <tr>
+      <td><strong>Web Framework</strong></td>
+      <td>Flask 3.0+</td>
+      <td>Microframework providing flexible routing, request lifecycle hooks (<code>teardown_appcontext</code>), and session management without bloat.</td>
+    </tr>
+    <tr>
+      <td><strong>Templating Engine</strong></td>
+      <td>Jinja2</td>
+      <td>Server-side rendering engine with built-in auto-escaping for XSS defense, template inheritance (<code>base.html</code>), and custom filters.</td>
+    </tr>
+    <tr>
+      <td><strong>Database Engine</strong></td>
+      <td>SQLite 3</td>
+      <td>Embedded, zero-configuration, zero-latency serverless relational database offering complete ACID transactions and foreign key integrity.</td>
+    </tr>
+    <tr>
+      <td><strong>Authentication & Security</strong></td>
+      <td>Werkzeug Security</td>
+      <td>Provides cryptographically secure password hashing (PBKDF2/scrypt salts) via <code>generate_password_hash</code> and <code>check_password_hash</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Frontend Styling</strong></td>
+      <td>Bootstrap 5.3 + Custom CSS</td>
+      <td>Responsive 12-column grid system, utility classes, and custom UI design for product cards, cart tables, and status pills.</td>
+    </tr>
+    <tr>
+      <td><strong>Version Control</strong></td>
+      <td>Git & GitHub CLI (<code>gh</code>)</td>
+      <td>Distributed revision control, automated device-flow authentication, and continuous repository hosting.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 4: DATABASE ARCHITECTURE -->
+<h1>4. Database Design & Data Dictionary</h1>
+<p>
+  The database schema is defined in <code>database.py</code>. SQLite's <code>PRAGMA foreign_keys = ON</code> is enforced on every request connection. Indexes are established on frequently queried columns (categories, customer relations, and order lookups).
+</p>
+
+<h2>4.1 Entity-Relationship (ER) Architecture</h2>
+<pre>
+  +--------------------+               +--------------------+
+  |       users        | 1           * |      products      |
+  +--------------------+---------------+--------------------+
+  | id (PK)            | (as seller)   | id (PK)            |
+  | username (UNIQUE)  |               | seller_id (FK)     |
+  | password_hash      |               | name, description  |
+  | role               |               | category, price    |
+  | created_at         |               | stock, is_active   |
+  +--------------------+               +--------------------+
+         | 1                                     | 1
+         | (as customer)                         |
+         | *                                     | *
+  +--------------------+ 1           * +--------------------+
+  |       orders       +---------------+    order_items     |
+  +--------------------+               +--------------------+
+  | id (PK)            |               | id (PK)            |
+  | customer_id (FK)   |               | order_id (FK)      |
+  | total, status      |               | product_id (FK)    |
+  | shipping_address   |               | quantity           |
+  | created_at         |               | price_at_purchase  |
+  +--------------------+               +--------------------+
+</pre>
+
+<h2>4.2 Comprehensive Data Dictionary</h2>
+
+<h3>Table: <code>users</code></h3>
+<p>Stores identity, encrypted credentials, and access roles for both buyers and sellers.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Column</th>
+      <th>Data Type</th>
+      <th>Constraints</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>INTEGER</td><td>PRIMARY KEY AUTOINCREMENT</td><td>Unique synthetic identifier for the user.</td></tr>
+    <tr><td><code>username</code></td><td>TEXT</td><td>NOT NULL, UNIQUE</td><td>Login handle chosen by the user.</td></tr>
+    <tr><td><code>password_hash</code></td><td>TEXT</td><td>NOT NULL</td><td>Cryptographic salt and hash output from Werkzeug.</td></tr>
+    <tr><td><code>role</code></td><td>TEXT</td><td>NOT NULL, CHECK (role IN ('customer', 'seller'))</td><td>Access privilege discriminator.</td></tr>
+    <tr><td><code>created_at</code></td><td>TEXT</td><td>NOT NULL, DEFAULT (datetime('now'))</td><td>ISO 8601 UTC timestamp of account creation.</td></tr>
+  </tbody>
+</table>
+
+<h3>Table: <code>products</code></h3>
+<p>Stores catalog items, inventory levels, pricing, category classification, and active status.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Column</th>
+      <th>Data Type</th>
+      <th>Constraints</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>INTEGER</td><td>PRIMARY KEY AUTOINCREMENT</td><td>Unique product identifier.</td></tr>
+    <tr><td><code>seller_id</code></td><td>INTEGER</td><td>NOT NULL, REFERENCES users(id)</td><td>Foreign key to the seller user record.</td></tr>
+    <tr><td><code>name</code></td><td>TEXT</td><td>NOT NULL</td><td>Commercial title of the item.</td></tr>
+    <tr><td><code>description</code></td><td>TEXT</td><td>DEFAULT ''</td><td>Detailed specifications or marketing copy.</td></tr>
+    <tr><td><code>category</code></td><td>TEXT</td><td>NOT NULL</td><td>One of: Electronics, Books, Home & Kitchen, Fashion, Sports, Beauty.</td></tr>
+    <tr><td><code>price</code></td><td>REAL</td><td>NOT NULL, CHECK (price > 0)</td><td>Unit price in INR (₹). Must be positive.</td></tr>
+    <tr><td><code>stock</code></td><td>INTEGER</td><td>NOT NULL, DEFAULT 0, CHECK (stock >= 0)</td><td>Available inventory. Invariant: non-negative.</td></tr>
+    <tr><td><code>is_active</code></td><td>INTEGER</td><td>NOT NULL, DEFAULT 1</td><td>Soft-deletion flag (1 = active, 0 = archived).</td></tr>
+    <tr><td><code>created_at</code></td><td>TEXT</td><td>NOT NULL, DEFAULT (datetime('now'))</td><td>Creation timestamp.</td></tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<h3>Table: <code>orders</code></h3>
+<p>Represents customer purchase headers, delivery destination, and fulfillment status.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Column</th>
+      <th>Data Type</th>
+      <th>Constraints</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>INTEGER</td><td>PRIMARY KEY AUTOINCREMENT</td><td>Master order identifier.</td></tr>
+    <tr><td><code>customer_id</code></td><td>INTEGER</td><td>NOT NULL, REFERENCES users(id)</td><td>Foreign key linking the purchasing customer.</td></tr>
+    <tr><td><code>total</code></td><td>REAL</td><td>NOT NULL</td><td>Grand monetary total of all included line items.</td></tr>
+    <tr><td><code>status</code></td><td>TEXT</td><td>NOT NULL, DEFAULT 'Pending', CHECK (...)</td><td>State machine: Pending, Processing, Shipped, Delivered, Cancelled.</td></tr>
+    <tr><td><code>shipping_address</code></td><td>TEXT</td><td>NOT NULL</td><td>Physical destination provided during checkout.</td></tr>
+    <tr><td><code>created_at</code></td><td>TEXT</td><td>NOT NULL, DEFAULT (datetime('now'))</td><td>Order submission timestamp.</td></tr>
+  </tbody>
+</table>
+
+<h3>Table: <code>order_items</code></h3>
+<p>Line items binding products to orders, snapshotting the historical purchase price at the moment of checkout.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Column</th>
+      <th>Data Type</th>
+      <th>Constraints</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>INTEGER</td><td>PRIMARY KEY AUTOINCREMENT</td><td>Unique line-item entry identifier.</td></tr>
+    <tr><td><code>order_id</code></td><td>INTEGER</td><td>NOT NULL, REFERENCES orders(id)</td><td>Foreign key linking master order.</td></tr>
+    <tr><td><code>product_id</code></td><td>INTEGER</td><td>NOT NULL, REFERENCES products(id)</td><td>Foreign key linking target product.</td></tr>
+    <tr><td><code>quantity</code></td><td>INTEGER</td><td>NOT NULL, CHECK (quantity > 0)</td><td>Number of units purchased in this order.</td></tr>
+    <tr><td><code>price_at_purchase</code></td><td>REAL</td><td>NOT NULL</td><td>Historical unit price snapshot protecting against subsequent price changes.</td></tr>
+  </tbody>
+</table>
+
+<h2>4.3 Database Indexing Plan</h2>
+<ul>
+  <li><code>idx_products_category ON products(category)</code>: Optimizes category browsing and filtered catalog searches.</li>
+  <li><code>idx_orders_customer ON orders(customer_id)</code>: Speeds up customer order history retrieval (<code>/orders</code>).</li>
+  <li><code>idx_order_items_order ON order_items(order_id)</code>: Accelerates order item lookups for invoices and seller views.</li>
+</ul>
+
+<!-- SECTION 5: CORE SUBSYSTEMS & WORKFLOWS -->
+<h1>5. Subsystems & Functional Specifications</h1>
+
+<h2>5.1 Authentication, Authorization & Session Security</h2>
+<p>
+  User access is segregated strictly between <strong>Customer</strong> and <strong>Seller</strong> roles:
+</p>
+<ul>
+  <li><strong>Authentication:</strong> Passwords are submitted via HTTPS POST, immediately converted into salted hashes using <code>generate_password_hash</code>, and compared via constant-time comparison in <code>check_password_hash</code>.</li>
+  <li><strong>Session Storage:</strong> User authentication tokens and cart state are preserved in cryptographically signed client cookies using Flask’s <code>app.secret_key</code>.</li>
+  <li><strong>Route Guards:</strong> Protected endpoints use Python decorators:
+    <ul>
+      <li><code>@login_required</code>: Ensures the user is logged in before accessing personal profiles or checkout.</li>
+      <li><code>@seller_required</code>: Enforces <code>session['user']['role'] == 'seller'</code>. Customers attempting to access seller portals receive a <code>403 Forbidden</code> response.</li>
+      <li><code>@customer_required</code>: Restricts checkout and order placement actions exclusively to buyers.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>5.2 Product Catalog, Dynamic Search & Safe Sorting</h2>
+<p>
+  The catalog engine supports free-form keyword search and category selection:
+</p>
+<ul>
+  <li><strong>SQL Injection Shield:</strong> Rather than injecting raw user strings into SQL <code>ORDER BY</code> clauses, ShopLite employs an immutable whitelist dictionary:
+    <pre><code>SORT_ORDERS = {
+    "newest": "p.created_at DESC, p.id DESC",
+    "price_asc": "p.price ASC, p.id ASC",
+    "price_desc": "p.price DESC, p.id ASC",
+    "name_asc": "p.name COLLATE NOCASE ASC",
+}</code></pre>
+  </li>
+  <li><strong>Search Query Execution:</strong> Parameterized <code>LIKE ?</code> search patterns match across both product names and descriptions simultaneously.</li>
+  <li><strong>Category Visual Identifiers:</strong> Each category is paired with an intuitive emoji placeholder (💻 Electronics, 📚 Books, 🍳 Home & Kitchen, 👕 Fashion, ⚽ Sports, 💄 Beauty) rendered via custom Jinja2 template filters.</li>
+</ul>
+
+<div class="page-break"></div>
+
+<h2>5.3 Session Cart Management with Defensive Clamping</h2>
+<p>
+  The shopping cart is maintained in client sessions as <code>{product_id: quantity}</code>. To prevent stale-data exploitation (e.g., placing an order for items that have been bought out or deleted):
+</p>
+<ul>
+  <li>Whenever the cart is loaded (<code>cart_items()</code>), the system cross-references each product ID against the live database.</li>
+  <li>If a product was deleted or marked <code>is_active = 0</code>, it is dropped from the cart with an alert to the user.</li>
+  <li>If the requested quantity exceeds the current <code>stock</code>, the cart quantity is automatically clamped down to available stock, accompanied by a warning notification.</li>
+</ul>
+
+<h2>5.4 ACID Transactional Checkout Engine</h2>
+<p>
+  The checkout process is the most mission-critical operation in an e-commerce platform. To prevent concurrency race conditions (such as overselling zero-stock inventory), <code>app.py</code> executes an explicit database transaction:
+</p>
+<pre>
+  [ User Submits Shipping Address & Clicks 'Place Order' ]
+                          |
+                          v
+         [ Execute: conn.execute("BEGIN") ]
+                          |
+                          v
+         [ Iterate through each cart item: ]
+         SELECT stock, is_active FROM products WHERE id = ?
+                          |
+           +--------------+--------------+
+           |                             |
+     [ Stock < Qty? ]             [ Stock >= Qty ]
+           |                             |
+           v                             v
+   [ Flash Error ]            [ Deduct stock in DB: ]
+   [ ROLLBACK ]               UPDATE products SET stock = stock - ?
+           |                             |
+           |                  [ Insert master order record: ]
+           |                  INSERT INTO orders ...
+           |                             |
+           |                  [ Insert line items: ]
+           |                  INSERT INTO order_items ...
+           |                             |
+           |                  [ Commit Transaction: ]
+           |                  conn.execute("COMMIT")
+           |                             |
+           +-----------------------------+
+                          |
+                          v
+        [ Empty session cart -> Redirect to /orders/<id> ]
+</pre>
+
+<h2>5.5 Seller Portal & Inventory Lifecycle</h2>
+<p>
+  Sellers possess full lifecycle authority over their merchandise:
+</p>
+<ul>
+  <li><strong>Create:</strong> Form validation ensures title, description, category, positive price, and non-negative initial stock.</li>
+  <li><strong>Edit & Restock:</strong> Sellers can update prices, adjust inventory upon receiving new shipments, or modify descriptions.</li>
+  <li><strong>Soft Deletion:</strong> Items are never permanently purged from SQL if they are associated with existing order history. Instead, <code>is_active</code> is set to 0, hiding them from customer searches while preserving historical order invoices.</li>
+  <li><strong>Fulfillment & Dispatch:</strong> Sellers can review incoming orders and update statuses across the complete delivery lifecycle.</li>
+</ul>
+
+<div class="page-break"></div>
+
+<!-- SECTION 6: API CATALOG -->
+<h1>6. Comprehensive Route & API Catalog</h1>
+<p>The table below lists all endpoints defined in <code>app.py</code>, their accepted HTTP methods, access permissions, and functional responsibilities:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Endpoint / URL</th>
+      <th>HTTP Methods</th>
+      <th>Authorization</th>
+      <th>Functional Purpose & Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/</code></td>
+      <td>GET</td>
+      <td>Public</td>
+      <td>Main catalog page. Renders filtered products, category chips, search bar, and sorting controls.</td>
+    </tr>
+    <tr>
+      <td><code>/product/&lt;int:product_id&gt;</code></td>
+      <td>GET</td>
+      <td>Public</td>
+      <td>Detailed view of a single product including description, stock status, seller info, and Add to Cart form.</td>
+    </tr>
+    <tr>
+      <td><code>/cart</code></td>
+      <td>GET</td>
+      <td>Public</td>
+      <td>Displays current cart items, quantities, unit prices, subtotals, and grand total.</td>
+    </tr>
+    <tr>
+      <td><code>/cart/add</code></td>
+      <td>POST</td>
+      <td>Customer / Guest</td>
+      <td>Adds specified quantity of a product to the cart with stock verification.</td>
+    </tr>
+    <tr>
+      <td><code>/cart/update</code></td>
+      <td>POST</td>
+      <td>Customer / Guest</td>
+      <td>Updates item quantity or removes item if quantity is set to 0.</td>
+    </tr>
+    <tr>
+      <td><code>/cart/remove/&lt;int:product_id&gt;</code></td>
+      <td>POST</td>
+      <td>Customer / Guest</td>
+      <td>Directly removes a product from the shopping cart session.</td>
+    </tr>
+    <tr>
+      <td><code>/checkout</code></td>
+      <td>GET, POST</td>
+      <td>Customer (Required)</td>
+      <td>GET renders checkout page with order summary. POST initiates the transactional checkout procedure.</td>
+    </tr>
+    <tr>
+      <td><code>/orders</code></td>
+      <td>GET</td>
+      <td>Customer (Required)</td>
+      <td>Lists all historical orders placed by the currently authenticated customer.</td>
+    </tr>
+    <tr>
+      <td><code>/orders/&lt;int:order_id&gt;</code></td>
+      <td>GET</td>
+      <td>Customer / Seller</td>
+      <td>Displays full invoice/receipt for an order. Restricted to the purchasing customer or associated seller.</td>
+    </tr>
+    <tr>
+      <td><code>/orders/&lt;int:order_id&gt;/status</code></td>
+      <td>POST</td>
+      <td>Seller (Required)</td>
+      <td>Updates order state (e.g. Processing, Shipped, Delivered, Cancelled).</td>
+    </tr>
+    <tr>
+      <td><code>/seller/dashboard</code></td>
+      <td>GET</td>
+      <td>Seller (Required)</td>
+      <td>Central seller dashboard listing all managed products, stock alerts, and quick action buttons.</td>
+    </tr>
+    <tr>
+      <td><code>/seller/product/new</code></td>
+      <td>GET, POST</td>
+      <td>Seller (Required)</td>
+      <td>GET renders product creation form. POST validates and inserts a new product listing.</td>
+    </tr>
+    <tr>
+      <td><code>/seller/product/&lt;int:product_id&gt;/edit</code></td>
+      <td>GET, POST</td>
+      <td>Seller (Required)</td>
+      <td>GET populates edit form. POST updates existing listing (restricted to product owner).</td>
+    </tr>
+    <tr>
+      <td><code>/seller/product/&lt;int:product_id&gt;/delete</code></td>
+      <td>POST</td>
+      <td>Seller (Required)</td>
+      <td>Soft-deletes or deactivates product from public catalog.</td>
+    </tr>
+    <tr>
+      <td><code>/seller/orders</code></td>
+      <td>GET</td>
+      <td>Seller (Required)</td>
+      <td>Displays all customer orders that contain items fulfilled by the authenticated seller.</td>
+    </tr>
+    <tr>
+      <td><code>/login</code></td>
+      <td>GET, POST</td>
+      <td>Public</td>
+      <td>User login portal with redirect-after-login support.</td>
+    </tr>
+    <tr>
+      <td><code>/register</code></td>
+      <td>GET, POST</td>
+      <td>Public</td>
+      <td>Account registration with role selector (Customer or Seller).</td>
+    </tr>
+    <tr>
+      <td><code>/logout</code></td>
+      <td>POST</td>
+      <td>Authenticated User</td>
+      <td>Terminates user session and redirects to home page.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 7: SECURITY HARDENING -->
+<h1>7. Security Hardening & Defenses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Threat Vector</th>
+      <th>Mitigation in ShopLite</th>
+      <th>Technical Verification</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>SQL Injection (SQLi)</strong></td>
+      <td>Complete elimination of string concatenation in database statements. All user inputs are passed via SQLite parameter tuples (<code>?</code> placeholders).</td>
+      <td>Verified across all SELECT, INSERT, UPDATE, and DELETE statements in <code>app.py</code> and <code>database.py</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Cross-Site Scripting (XSS)</strong></td>
+      <td>Jinja2 template auto-escaping enabled by default. User names, product descriptions, and shipping addresses are rendered safe.</td>
+      <td>Verified in all template files in <code>/templates</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Credential Exposure</strong></td>
+      <td>Passwords are never stored in plaintext. Secure salt and cryptographic hashing are applied using standard cryptographic algorithms.</td>
+      <td>Verified via Werkzeug PBKDF2/scrypt implementation.</td>
+    </tr>
+    <tr>
+      <td><strong>Broken Object Level Authorization (BOLA)</strong></td>
+      <td>Sellers cannot edit, view, or alter products owned by other sellers. Queries enforce <code>WHERE id = ? AND seller_id = ?</code>.</td>
+      <td>Verified in <code>seller_product_edit</code> and <code>seller_product_delete</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<!-- SECTION 8: INSTALLATION & RUN GUIDE -->
+<h1>8. Installation, Execution & Deployment Guide</h1>
+
+<h2>8.1 Local Development Setup</h2>
+<p>Follow these steps to set up and run ShopLite on any local operating system:</p>
+
+<pre><code># 1. Clone the repository from GitHub
+git clone https://github.com/shreyascd/online-marketplace.git
+cd online-marketplace
+
+# 2. Create and activate a Python virtual environment
+python -m venv .venv
+# On Windows:
+.venv\Scripts\activate
+# On Linux / macOS:
+source .venv/bin/activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Launch the application
+python app.py</code></pre>
+
+<p>
+  Once launched, open your web browser and navigate to: <code>http://127.0.0.1:5000</code>
+</p>
+
+<h2>8.2 Seed Demo Accounts</h2>
+<p>Upon initial launch, the system automatically checks if the database is empty and creates three default accounts with sample inventory:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Account Role</th>
+      <th>Username</th>
+      <th>Password</th>
+      <th>Pre-populated Catalog Items</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Seller 1</strong></td>
+      <td><code>seller1</code></td>
+      <td><code>seller123</code></td>
+      <td>Wireless Mouse M200, Mechanical Keyboard K10, Fast Charger 65W, Yoga Mat, Dumbbell Set.</td>
+    </tr>
+    <tr>
+      <td><strong>Seller 2</strong></td>
+      <td><code>seller2</code></td>
+      <td><code>seller123</code></td>
+      <td>Clean Code Book, Flask Web Guide, Steel Water Bottle, Cotton T-Shirt, Running Shoes, Face Serum.</td>
+    </tr>
+    <tr>
+      <td><strong>Customer</strong></td>
+      <td><code>customer1</code></td>
+      <td><code>cust123</code></td>
+      <td>Ready for testing purchases, cart operations, checkout, and order history.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 9: ENGINEERING ROADMAP -->
+<h1>9. Future Engineering Roadmap</h1>
+<p>The following extensions are planned for upcoming iterations of ShopLite:</p>
+<ol>
+  <li><strong>Payment Gateway Integration:</strong> Integrating Stripe and Razorpay SDKs with webhook listeners to support live credit cards, UPI, and net banking.</li>
+  <li><strong>Cloud Asset Storage:</strong> Offloading image uploads to Amazon S3 or Cloudflare R2 with image resizing pipelines.</li>
+  <li><strong>Automated Notifications:</strong> Implementing transactional emails via SendGrid/SES for order confirmations and shipping updates.</li>
+  <li><strong>Product Reviews & Ratings:</strong> Allowing verified customers to submit 1-5 star reviews and feedback.</li>
+  <li><strong>Database Migration to PostgreSQL:</strong> Swapping the SQLite driver for PostgreSQL using SQLAlchemy or asyncpg for large-scale enterprise deployments.</li>
+</ol>
+
+<!-- SIGN-OFF BLOCK -->
+<div style="margin-top: 40px; border-top: 2px solid #cbd5e1; padding-top: 20px;">
+  <table style="border: none;">
+    <tr style="background: none;">
+      <td style="border: none; width: 60%;">
+        <strong>Project Lead & Author:</strong><br>
+        Shreyas Channabasappa Doddappagol<br>
+        Email: <a href="mailto:shreyas.profession@gmail.com">shreyas.profession@gmail.com</a><br>
+        Phone: +91 8867558967<br>
+        GitHub: <a href="https://github.com/shreyascd">https://github.com/shreyascd</a>
+      </td>
+      <td style="border: none; text-align: right; vertical-align: bottom;">
+        <strong>Document Status:</strong> Verified & Complete<br>
+        <strong>Repository:</strong> <a href="https://github.com/shreyascd/online-marketplace">online-marketplace</a><br>
+        <strong>Date:</strong> November 17, 2026
+      </td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>
